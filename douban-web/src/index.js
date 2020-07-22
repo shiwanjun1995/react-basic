@@ -1,20 +1,10 @@
-console.log('🌈🌈🌈🌈🌈🌈','我是默认的打包入口文件');
-// 处理css
-import './style.css'
-// 处理图片
-import Icon1 from './icon1.jpg'
+// 导入react相关的包
+import React from 'react'
+import ReactDOM from 'react-dom'
+// 第二个参数是属性
+// const elem1 = React.createElement('h1',{ title:'这个是h1标签' },'你好呀大猪~')
+// ReactDOM.render(elem1, document.getElementById('app'))
 
-function component() {
-    var ele = document.createElement('div')
-    ele.innerHTML = 'Hello 你好大猪~'
-    ele.classList.add('hello')
-
-    // 将图像添加到我们现有的div
-    var myIcon = new Image()
-    myIcon.src = Icon1
-    ele.appendChild(myIcon)
-
-    return ele
-}
-
-document.body.appendChild(component())
+// 导入组件
+import Hello from './components/Hello.jsx'
+ReactDOM.render(<Hello></Hello>, document.getElementById('app'))

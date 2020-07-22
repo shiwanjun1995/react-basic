@@ -1,0 +1,33 @@
+// 在Babel执行编译的过程中，会从项目的根目录下的 .babelrc文件中读取配置。.babelrc是一个json格式的文件。
+
+// .rc 结尾的文件通常代表运行时自动加载的文件，配置
+// .babelrc文件需要的配置项主要有预设(presets)和插件(plugins)。
+
+// https://www.cnblogs.com/tugenhua0707/p/9452471.html 基本配置
+{
+    "presets": [
+        [
+            "@babel/env",
+            {
+                // 默认{}  指定需要支持的环境，如chrome、safari、ie等，甚至可以指定版本
+                "targets": {
+                    // 支持市场份额超过1%的浏览器
+                    // 支持ie大于等于9版本、chrome大于等于60版本、ios大于等于9版本、andriod大于等于4.0版本所需的ployfill代码转换
+                    // 支持每个浏览器最后两个版本
+                    "browsers": ["> 1%", "ie >= 9", "chrome >= 60", "ios >= 9", "android >= 4.0", "last 2 versions"]
+                }
+            }
+        ],
+        [
+            "@babel/react"
+        ]
+    ],
+    "plugins": [
+        "@babel/plugin-transform-runtime"
+    ]
+}
+
+// {
+// 	"presets":["@babel/env", "@babel/react"],
+// 	"plugins":["@babel/plugin-transform-runtime"]
+// }
