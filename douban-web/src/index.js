@@ -6,5 +6,9 @@ import ReactDOM from 'react-dom'
 // ReactDOM.render(elem1, document.getElementById('app'))
 
 // 导入组件
-import Hello from './components/Hello.jsx'
-ReactDOM.render(<Hello></Hello>, document.getElementById('app'))
+// import Hello from './components/Hello.jsx'
+// ReactDOM.render(<Hello></Hello>, document.getElementById('app'))
+
+// 导入 ant 的UI组件
+import AntButton from './components/AntButton.jsx'
+ReactDOM.render(<AntButton />, document.getElementById('app'))

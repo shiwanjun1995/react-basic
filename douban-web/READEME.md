@@ -26,7 +26,14 @@
                 打包的输出文件是：dist/main.js
                 [配置完上述两条规则后会出现警告信息：WARNING in configuration The 'mode' option has not been set, webpack will fallback to 'production' for this value. Set 'mode' option to 'development' or 'production' to enable defaults for each environment. You can also set it to 'none' to disable any default behavior.]
                 新增了mode 选项 可选的配置是 development 和 production ('mode' 选项还未设置。将 'mode' 选项设置为 'development' 或 'production'，来启用环境默认值。)
-        .babelrc 文件的配置 babel6.X版本之后，所有的插件都是可插拔的，也就是说只安装babel依然无法正常的工作，我们需要配置对应的.babelrc文件才能起作用。
+        .babelrc 文件的配置
+            这个配置的文件是一个json文件 .rc结尾的文件通常代表运行时自动加载的文件 在Babel执行编译的过程中 会从项目的根目录下的 .babelrc 文件中读取配置
+            babel6.X版本之后，所有的插件都是可插拔的，也就是说只安装babel依然无法正常的工作，我们需要配置对应的.babelrc文件才能起作用。
+            该文件需要的配置项主要有预设(presets)和插件(plugins) 每一个配置都是一个 Array 类型的参数 比如：
+            {
+                "presets": [["@babel/env",{options}],"@babel/react"], // 每一个配置型里面又是一个 array
+                "plugins": ["@babel/plugin-transform-runtime"]
+            }
 
 
     4.下载插件
@@ -43,7 +50,7 @@
         babel-loader 加载 ES2015+ 代码，然后使用 Babel 转译为 ES5 也就是把高级的语法转换成可以兼容低级浏览器的语法
         @babel/core 这个插件的作用是将js转换成AST的形态 方便各个插件分析语法进行相应的处理。有些新语法在低版本 js 中是不存在的，如箭头函数，rest 参数，函数默认值等，这种语言层面的不兼容只能通过将代码转为 ast，分析其语法后再转为低版本 js
         @babel/preset-env 可以根据配置的目标浏览器或者运行环境来自动将ES2015+的代码转换为es5
-        @babel/plugin-transform-runtime(https://zhuanlan.zhihu.com/p/86746720 几个插件的差别) 减少代码体积 babel 对一些公共方法使用了非常小的辅助代码，比如 _extend。 默认情况下会被添加到每一个需要它的文件中你可以引入 babel runtime 作为一个独立模块，来避免重复引入。下面的配置禁用了 babel 自动对每个文件的 runtime 注入，而是引入 babel-plugin-transform-runtime 并且使所有辅助代码从这里引用。
+        @babel/plugin-transform-runtime(https://zhuanlan.zhihu.com/p/86746720 几个插件的差别) 抽离运行时重复的函数作为模块复用 减少代码体积 babel 对一些公共方法使用了非常小的辅助代码，比如 _extend。 默认情况下会被添加到每一个需要它的文件中你可以引入 babel runtime 作为一个独立模块，来避免重复引入。下面的配置禁用了 babel 自动对每个文件的 runtime 注入，而是引入 babel-plugin-transform-runtime 并且使所有辅助代码从这里引用。
         @babel/runtime 转换插件通常仅在开发中使用，但是运行时本身将取决于部署的代码。 cnpm i -S @babel/runtime
 
         react相关的插件(https://www.npmjs.com/package/react-dom)
@@ -54,5 +61,11 @@
         处理jsx语法的插件
         cnpm i -D @babel/preset-react
 
+        下载ant design UI组件
+        cnpm i - S antd
+        借助 babel-plugin-component，我们可以只引入需要的组件，以达到减小项目体积的目的。
+        cnpm i -D babel-plugin-import 按需加载所需要用到的插件
+        cnpm i -D less antd 的样式使用了 Less 作为开发语言，并定义了一系列全局/组件的样式变量
+        cnpm i -D sass-loader node-sass 安装加载和转译 SASS/SCSS 文件
 
 
