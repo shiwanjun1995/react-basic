@@ -4,6 +4,17 @@ const HTmlWebpackPlugin = require('html-webpack-plugin')
 module.exports = {
     // 必须要有 mode 属性, 有两个可选值：  development   production
     mode: 'development',
+    // 入口节点
+    entry: {
+        // entry的默认值是 ./src 由于默认读取的是 index.js 所以 可以直接不写
+        app: './src/app.js'
+    },
+    // 输出节点
+    output: {
+        // output.path 的默认值是 ./dist
+        path: path.resolve(__dirname, './dist'),
+        filename: '[name].js'
+    },
     // 插件
     plugins: [
         new HTmlWebpackPlugin({
@@ -24,10 +35,21 @@ module.exports = {
             // 处理普通css样式表
             // loaders 可以链式编程通过多个loaderss 从右到左形成一种依赖性(也就是说最先配置的要放在最右边 这里 style-loader 依赖 css-loader)
             { test: /\.css$/, use: ['style-loader', 'css-loader'] },
+            // 处理sass
+            { test: /\.scss$/, use: ['style-loader', 'css-loader', 'sass-loader'] }, // 处理 .scss 样式表的loader
             // 处理图片
             { test: /\.(jpg|jpeg|png|gif|svg)$/, use: ['url-loader'] },
             // 处理字体
             { test: /\.(eot|otf|woff|woff2|ttf)/, use: ['url-loader'] },
         ]
+    },
+    // https://www.webpackjs.com/configuration/resolve/#resolve-alias
+    // 模块解析对象 这些选项能设置模块如何被解析
+    resolve: {
+        // 创建 inport/require 的别名 来确保模块引入变得简单 起别名
+        alias: {
+            '@': path.resolve(__dirname, './src/')
+        },
+        extensions: ['.js', '.jsx', '.json', '.css', '.scss']
     }
 }

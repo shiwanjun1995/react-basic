@@ -32,6 +32,12 @@
                 "libraryName": "antd",
                 "style": "css"
             }
+        ],
+        [
+            "@babel/plugin-proposal-class-properties",
+            {
+                "lose": true
+            }
         ]
     ]
 }

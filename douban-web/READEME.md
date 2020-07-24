@@ -26,6 +26,15 @@
                 打包的输出文件是：dist/main.js
                 [配置完上述两条规则后会出现警告信息：WARNING in configuration The 'mode' option has not been set, webpack will fallback to 'production' for this value. Set 'mode' option to 'development' or 'production' to enable defaults for each environment. You can also set it to 'none' to disable any default behavior.]
                 新增了mode 选项 可选的配置是 development 和 production ('mode' 选项还未设置。将 'mode' 选项设置为 'development' 或 'production'，来启用环境默认值。)
+            修改默认的入口节点：(这里修改为入口节点为 app.js 之前是src/index.js)
+                entry: {
+                    './src/app.js'
+                }
+            修改默认的输出节点：(这里修改输出节点的path路径并添加最后输出的文件名)
+                output: {
+                    path: path.resolve(__dirname, './dist'),
+                    filename: '[name].js' // 这个里面配置的 name 值就是 上面入口书写的属性名 app
+                }
         .babelrc 文件的配置
             这个配置的文件是一个json文件 .rc结尾的文件通常代表运行时自动加载的文件 在Babel执行编译的过程中 会从项目的根目录下的 .babelrc 文件中读取配置
             babel6.X版本之后，所有的插件都是可插拔的，也就是说只安装babel依然无法正常的工作，我们需要配置对应的.babelrc文件才能起作用。
@@ -67,5 +76,33 @@
         cnpm i -D babel-plugin-import 按需加载所需要用到的插件
         cnpm i -D less antd 的样式使用了 Less 作为开发语言，并定义了一系列全局/组件的样式变量
         cnpm i -D sass-loader node-sass 安装加载和转译 SASS/SCSS 文件
+
+        安装能够处理es6新特性 es7 es8 等语法的插件 另外还需要去 .babelrc 文件中进行该插件相应的配置
+        cnpm i -D @babel/plugin-proposal-class-properties
+
+
+    5.项目结构
+    ---- views 存放的是页面相关性的文件
+    ------ layout 存放的是页面的布局文件
+    ------ pages 存放的是页面文件
+    -------- login 登录页文件夹
+    ---------- Login.jsx 登录页
+    src
+        |-- assets            // 静态资源
+        |-- components        // 公共组件目录 当业务需要拆分组件的时候，可以在对应的业务文件夹下单独创建一个components文件夹
+        |-- models            // 公共model存放位置
+            |-- index.js        // model 入口文件，所有的业务model都需要在这里登记才可以使用
+        |-- views             // 容器组件
+            |-- layout        // 页面布局文件
+            |-- pages         // 具体的业务页面
+                |-- demo          // 业务容器
+                |-- DemoPage.jsx  // 业务入口 我们约定入口文件后都带一个“Page”字样
+                |-- DemoPage.less // 业务样式
+        |-- services          // 公共api存放
+        |-- utils             // 工具
+        |-- global.less       // 样式变量 方法
+        |-- index.js          // 入口文件
+        |-- index.less        // 全局样式 覆盖样式
+        |-- router.js         // 基础路由
 
 
