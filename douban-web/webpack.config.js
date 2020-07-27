@@ -48,7 +48,10 @@ module.exports = {
     resolve: {
         // 创建 inport/require 的别名 来确保模块引入变得简单 起别名
         alias: {
-            '@': path.resolve(__dirname, './src/')
+            // 配置 src
+            '@': path.resolve(__dirname, './src/'),
+            // 配置 assets
+            '$assets': path.resolve(__dirname, './src/assets/')
         },
         extensions: ['.js', '.jsx', '.json', '.css', '.scss']
     }

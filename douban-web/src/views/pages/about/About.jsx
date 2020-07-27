@@ -1,7 +1,6 @@
-// 这个是电影页
 import React from 'react'
 
-export default class Movie extends React.Component {
+export default class About extends React.Component {
   constructor() {
     super()
     this.state = {}
@@ -9,7 +8,7 @@ export default class Movie extends React.Component {
 
   render() {
     return <div>
-      <h3>Movie</h3>
+      <h3>About</h3>
     </div>
   }
 }
