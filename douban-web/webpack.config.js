@@ -54,5 +54,21 @@ module.exports = {
             '$assets': path.resolve(__dirname, './src/assets/')
         },
         extensions: ['.js', '.jsx', '.json', '.css', '.scss']
+    },
+    // 开发中的 行为选项
+    devServer: {
+        port: 8088, // 启用的端口号
+        // 如果你有单独的后端开发服务器 API，并且希望在同域名下发送 API 请求 ，那么代理某些 URL 会很有用。
+        proxy: {
+            "/api": {
+                // 代理的目标服务器地址
+                // '/api/movie/in_theaters' 路径重写为：'/movie/in_theaters'
+                // 例如： 请求到 /api/movie/in_theaters 现在会被代理到请求 http://api.douban.com/v2/movie/in_theaters
+                target: "http://api.douban.com/v2",
+                // 默认情况下，不接受运行在 HTTPS 上，且使用了无效证书的后端服务器。如果你想要接受，修改配置如下：
+                secure: false,
+                pathRewrite: {"^/api" : ""}
+              }
+        }
     }
 }

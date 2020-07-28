@@ -12,9 +12,10 @@ import {
 } from '@ant-design/icons';
 
 // 导入路由
-import { BrowserRouter, HashRouter, Route, Link, Redirect } from "react-router-dom";
+import { HashRouter, Route, Link, Redirect, Switch } from "react-router-dom";
 // 导入路由相关的组件
-import Movie from '@/views/pages/movie/Movie'
+import MovieList from '@/views/pages/movie/children/MovieList'
+import MovieDetail from '@/views/pages/movie/children/MovieDetail'
 import About from '@/views/pages/about/About'
 import Home from '@/views/pages/home/Home'
 
@@ -33,7 +34,6 @@ class App extends React.Component {
             msg: '我是首页',
             collapsed: false,
         }
-        // this.onCollapse = this.onCollapse.bind(this)
     }
     render() {
         return (
@@ -48,14 +48,27 @@ class App extends React.Component {
                                 {/* <img src="$assets/images/logo.png" /> */}
                                 <img src={require('$assets/images/logo.png').default} />
                             </div>
-                            <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
-                                <Menu.Item key="1" icon={<UserOutlined />}>
+                            {/* <Menu theme="dark" mode="inline" defaultSelectedKeys={['2']}> */}
+                            <Menu theme="dark" mode="inline" defaultSelectedKeys={[location.hash.split('/')[1]||'home']}>
+                                <Menu.Item key="home" icon={<UserOutlined />}>
                                     <Link to="/home">首页</Link>
                                 </Menu.Item>
-                                <Menu.Item key="2" icon={<VideoCameraOutlined />}>
+                                {/* <Menu.Item key="2" icon={<VideoCameraOutlined />}>
                                     <Link to="/movie">movie</Link>
-                                </Menu.Item>
-                                <Menu.Item key="3" icon={<UploadOutlined />}>
+                                </Menu.Item> */}
+                                {/* 该组件表示其下包含子菜单 */}
+                                <SubMenu key="sub1" icon={<VideoCameraOutlined />} title="电影">
+                                    <Menu.Item key="in_theaters">
+                                        <Link to="/movieList/in_theaters">正在热映</Link>
+                                    </Menu.Item>
+                                    <Menu.Item key="coming_soon">
+                                        <Link to="/movieList/coming_soon">即将上映</Link>
+                                    </Menu.Item>
+                                    <Menu.Item key="top250">
+                                        <Link to="/movieList/top250">Top250</Link>
+                                    </Menu.Item>
+                                </SubMenu>
+                                <Menu.Item key="about" icon={<UploadOutlined />}>
                                     <Link to="/about">关于</Link>
                                 </Menu.Item>
                             </Menu>
@@ -71,12 +84,28 @@ class App extends React.Component {
                                 {/* {this.onToggleEle()} */}
                             </Header>
                             {/* 主体区域的content */}
-                            <Content
-                                className="site-layout-background"
-                                style={{ margin:'24px 16px', padding:24, minHeight:280 }}
-                            >
+                            <Content className="site-layout-background" style={{ margin:'24px 16px', padding:24, minHeight:280 }}>
                                 <Route path="/" exact render={() => <Redirect to="/home" />}></Route>
-                                <Route path="/movie" component={Movie}></Route>
+
+                                {/* Switch 作用：就是 从上到下，依次匹配，如果有一个成功了，就不会继续往下匹配了 */}
+                                <Switch>
+                                    {/*
+                                        当前哈希值为： /movielist/detail/26416062
+                                        问题： 这个哈希值可以同时被 一下两个路由规则 同时匹配到。并且，只要匹配到了
+                                        组件就会展示
+
+                                        Switch组件作用：
+                                            被 Switch 组件包裹的 Route 中，只会有一个被匹配
+                                            也就是说：只要第一Route匹配成功了，那么后面的Route就不会再匹配了
+
+                                        路由再配置的时候，应该遵循：
+                                        匹配范围小的路由规则再前，匹配返回大的路由规则再后
+                                    */}
+                                    {/* <Route path="/movieList" component={MovieList}></Route> */}
+                                    {/* 注意路由规则出现的顺序 */}
+                                    <Route path="/movieList/detail/:id" component={MovieDetail}></Route>
+                                    <Route path="/movieList/:movieType" component={MovieList}></Route>
+                                </Switch>
                                 <Route path="/about" component={About}></Route>
                                 <Route path="/home" component={Home}></Route>
                             </Content>
@@ -99,15 +128,6 @@ class App extends React.Component {
             onClick: this.toggle,
         })
     }
-    // onCollapse = collapsed => {
-    //     console.log(collapsed)
-    //     // this.setState(pState => ({
-    //     //     collapsed: pState.collapsed
-    //     // })
-    //     this.setState({
-    //         collapsed
-    //     })
-    // }
 }
 
 export default App

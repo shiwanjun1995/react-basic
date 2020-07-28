@@ -20,4 +20,12 @@ import ReactDOM from 'react-dom'
 // 自动解析扩展名
 import App from '@/views/layout'
 
+import fetchJSONP from 'fetch-jsonp'
+
+// 设置 自己的  baseURL
+React.Component.prototype.baseURL = 'http://api.douban.com'
+React.Component.prototype.apikey = '0df993c66c0c636e29ecbb5344252a4a'
+// 挂载 发起JSONP 请求的 API
+React.Component.prototype.$http = fetchJSONP
+
 ReactDOM.render(<App></App>, document.getElementById('app'))

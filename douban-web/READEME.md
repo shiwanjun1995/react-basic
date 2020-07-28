@@ -112,3 +112,9 @@
     BrowserRouter主要使用在浏览器中，也就是WEB应用中。它利用HTML5 的history API来同步URL和UI的变化。当我们点击了程序中的一个链接之后,BrowserRouter就会找出与这个URL匹配的Route，并将他们对应的组件渲染出来。 BrowserRouter是用来管理我们的组件的，那么它当然要被放在最顶级的位置，而我们的应用程序的组件就作为它的一个子组件而存在。
 
 
+    7.发起请求
+    cnpm i -S fetch-jsonp
+    这个是基于 promise 规范的 fetch Api fetch这个API是专门用于发起请求的
+
+
+
