@@ -14,8 +14,8 @@ import {
 // 导入路由
 import { HashRouter, Route, Link, Redirect, Switch } from "react-router-dom";
 // 导入路由相关的组件
-import MovieList from '@/views/pages/movie/children/MovieList'
-import MovieDetail from '@/views/pages/movie/children/MovieDetail'
+import MovieList from '@/views/pages/movie/MovieList'
+import MovieDetail from '@/views/pages/movie/MovieDetail'
 import About from '@/views/pages/about/About'
 import Home from '@/views/pages/home/Home'
 
@@ -59,13 +59,13 @@ class App extends React.Component {
                                 {/* 该组件表示其下包含子菜单 */}
                                 <SubMenu key="sub1" icon={<VideoCameraOutlined />} title="电影">
                                     <Menu.Item key="in_theaters">
-                                        <Link to="/movieList/in_theaters">正在热映</Link>
+                                        <Link to="/movieList/in_theaters/1">正在热映</Link>
                                     </Menu.Item>
                                     <Menu.Item key="coming_soon">
-                                        <Link to="/movieList/coming_soon">即将上映</Link>
+                                        <Link to="/movieList/coming_soon/1">即将上映</Link>
                                     </Menu.Item>
                                     <Menu.Item key="top250">
-                                        <Link to="/movieList/top250">Top250</Link>
+                                        <Link to="/movieList/top250/1">Top250</Link>
                                     </Menu.Item>
                                 </SubMenu>
                                 <Menu.Item key="about" icon={<UploadOutlined />}>
@@ -104,7 +104,7 @@ class App extends React.Component {
                                     {/* <Route path="/movieList" component={MovieList}></Route> */}
                                     {/* 注意路由规则出现的顺序 */}
                                     <Route path="/movieList/detail/:id" component={MovieDetail}></Route>
-                                    <Route path="/movieList/:movieType" component={MovieList}></Route>
+                                    <Route path="/movieList/:movieType/:moviePage" component={MovieList}></Route>
                                 </Switch>
                                 <Route path="/about" component={About}></Route>
                                 <Route path="/home" component={Home}></Route>

@@ -1,0 +1,21 @@
+.movie-container {
+    height: 100%;
+}
+.movie-list {
+    display: flex;
+    // justify-content: space-between;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    height: calc(100% - 50px);
+    background-color: #fff;
+    .ant-card {
+        border-radius: 8px;
+        margin: 0 20px 20px 0;
+    }
+    .ant-tag {
+        margin: 10px 0;
+    }
+    img {
+        height: 350px;
+    }
+}

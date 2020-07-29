@@ -67,6 +67,8 @@ module.exports = {
                 target: "http://api.douban.com/v2",
                 // 默认情况下，不接受运行在 HTTPS 上，且使用了无效证书的后端服务器。如果你想要接受，修改配置如下：
                 secure: false,
+                // 必须设置该项
+                changeOrigin: true,
                 pathRewrite: {"^/api" : ""}
               }
         }
