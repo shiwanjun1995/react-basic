@@ -19,6 +19,7 @@ import ReactDOM from 'react-dom'
 // import App from '@/views/layout/App.jsx'
 // 自动解析扩展名
 import App from '@/views/layout'
+import Login from '@/views/pages/login/Login'
 
 import fetchJSONP from 'fetch-jsonp'
 
@@ -28,4 +29,10 @@ React.Component.prototype.apikey = '0df993c66c0c636e29ecbb5344252a4a'
 // 挂载 发起JSONP 请求的 API
 React.Component.prototype.$http = fetchJSONP
 
-ReactDOM.render(<App></App>, document.getElementById('app'))
+// 登录页还是首页
+if (sessionStorage.getItem('login') == 'no') {
+    ReactDOM.render(<Login/>, document.getElementById('app'))
+} else {
+    ReactDOM.render(<App></App>, document.getElementById('app'))
+}
+

@@ -51,7 +51,9 @@ module.exports = {
             // 配置 src
             '@': path.resolve(__dirname, './src/'),
             // 配置 assets
-            '$assets': path.resolve(__dirname, './src/assets/')
+            '$assets': path.resolve(__dirname, './src/assets/'),
+            // 配置images
+            '$img': path.resolve(__dirname, './src/assets/images'),
         },
         extensions: ['.js', '.jsx', '.json', '.css', '.scss']
     },
