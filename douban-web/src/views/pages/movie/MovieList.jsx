@@ -2,13 +2,13 @@
 import React from 'React'
 
 // 按需导入 ant 的UI组件
-import { Card, Rate, Tag, Pagination, Layout } from 'antd';
+import { Card, Rate, Tag, Pagination, Layout, Spin, Avatar } from 'antd';
 
 // 解构 ant UI组件
 const { Meta } = Card;
 
 // 导入组件需要的样式表
-import '@/assets/css/movie.scss'
+import '@/assets/css/movieList.scss'
 
 class MovieList extends React.Component {
     constructor(props) {
@@ -20,32 +20,39 @@ class MovieList extends React.Component {
             movieList: [], // 电影列表数据
             pageSize: 5,
             totalCount: 0,
+            isLoading: false, // 默认不是在加载中
         }
     }
     render() {
+        if (this.state.isLoading) {
+            return (
+                <Spin className="movie-spin" size="large" />
+            )
+        }
         return (
             <div className="movie-container">
-                <Layout className="movie-list">
+                <Layout className="table-box">
                     {
                         this.state.movieList.map(item => (
                             <Card
                                 key={item.id}
                                 style={{width:250}}
                                 hoverable
-                                cover={<img src={item.images.small} />}
+                                cover={<img src={item.images.small}
+                                onClick={() => this.onClickGoDetail(item.id)}
+                                />}
                             >
                                 <Meta title={item.title}></Meta>
                                 <Tag color="cyan">上映年份：{item.year}</Tag>
                                 <p>电影类型：{item.genres.join('、')}</p>
                                 <Rate disabled defaultValue={item.rating.average/2}></Rate>
-                                {/* { JSON.stringify(item) } */}
                             </Card>)
                         )
 
                     }
                 </Layout>
                 {/* 分页组件 */}
-                <Pagination
+                <Pagination className="pagination-box"
                     // 当前页数
                     current={parseInt(this.state.moviePage)}
                     // 默认的当前页数
@@ -53,12 +60,15 @@ class MovieList extends React.Component {
                     // 默认的每页条数
                     defaultPageSize={this.state.pageSize}
                     onChange={this.onChangePage}
-                    total={23} />
+                    total={this.state.totalCount}
+                    // 用于显示数据总量和当前数据顺序
+                    showTotal={(total) => `共 ${total} 条`}
+                ></Pagination>
             </div>
         )
     }
-    // 组件将要被渲染
-    componentWillMount() {
+    // 组件已经渲染完成
+    componentDidMount() {
         this.getMovieList()
     }
     /**
@@ -71,7 +81,8 @@ class MovieList extends React.Component {
         // console.log('---',nextProps.match.params);
         this.setState({
             movieType: nextProps.match.params.movieType,
-            moviePage: nextProps.match.params.moviePage
+            moviePage: nextProps.match.params.moviePage,
+            isLoading: true,
         }, function() {
             this.getMovieList()
         })
@@ -92,14 +103,19 @@ class MovieList extends React.Component {
 
         this.setState({
             movieList: data.subjects,
-            totalCount: data.total
+            totalCount: data.total,
+            isLoading: false, // 数据已加载完成
         })
     }
     // 分页 页码改变的回调，参数是改变后的页码及每页条数
     onChangePage = (current, pageSize) => {
-        console.log(current,pageSize,this.props);
         const changeUrl = `/movieList/${this.state.movieType}/${current}`
         this.props.history.push(changeUrl)
+    }
+    // 跳转电影详情页面
+    onClickGoDetail = (id) => {
+        const detailUrl =  `/movieList/detail/${id}`
+        this.props.history.push(detailUrl)
     }
 }
 

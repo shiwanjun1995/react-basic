@@ -1,0 +1,17 @@
+.movie-detail {
+    height: 100%;
+}
+.detail-box {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: flex-start;
+    .ant-card-meta-description {
+        margin: 10px 0;
+    }
+    .ant-carousel {
+        width: 100%;
+    }
+}
+
